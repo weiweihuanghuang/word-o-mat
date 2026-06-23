@@ -110,7 +110,7 @@ class WordomatWindow:
         self.g1.colorWell.set(None)
 
         # populate from prefs
-        if self.reqMarkColor is not "None": # initial pref
+        if self.reqMarkColor != "None": # initial pref
             try:
                 r, g, b, a = self.reqMarkColor
                 savedColor = NSColor.colorWithCalibratedRed_green_blue_alpha_(r, g, b, a)
@@ -244,7 +244,7 @@ class WordomatWindow:
 
         # parse mark color pref
         # print("*** %s" % self.reqMarkColor)
-        if self.reqMarkColor is not "None":
+        if self.reqMarkColor != "None":
             if type(self.reqMarkColor) is tuple:
                 self.reqMarkColor = tuple(float(i) for i in self.reqMarkColor)
             else:
@@ -297,8 +297,8 @@ class WordomatWindow:
         self.allWords = []
         self.outputWords = []
 
-        self.textfiles = ['catalan', 'czech', 'danish', 'dutch', 'ukacd', 'finnish', 'french', 'german', 'hungarian', 'icelandic', 'italian', 'latin', 'norwegian', 'polish', 'slovak', 'spanish', 'vietnamese']
-        self.languageNames = ['Catalan', 'Czech', 'Danish', 'Dutch', 'English', 'Finnish', 'French', 'German', 'Hungarian', 'Icelandic', 'Italian', 'Latin', 'Norwegian', 'Polish', 'Slovak', 'Spanish', 'Vietnamese syllables']
+        self.textfiles = ['catalan', 'czech', 'danish', 'dutch', 'ukacd', 'finnish', 'french', 'german', 'hungarian', 'icelandic', 'italian', 'latin', 'norwegian', 'polish', 'slovak', 'spanish', 'vietnamese', '', 'greek', '', 'belarusian', 'bulgarian', 'kazakh', 'macedonian', 'mongolian', 'russian', 'serbian', 'tajik', 'ukrainian', '']
+        self.languageNames = ['Catalan', 'Czech', 'Danish', 'Dutch', 'English', 'Finnish', 'French', 'German', 'Hungarian', 'Icelandic', 'Italian', 'Latin', 'Norwegian', 'Polish', 'Slovak', 'Spanish', 'Vietnamese', '---', 'Greek', '---', 'Belarusian', 'Bulgarian', 'Kazakh', 'Macedonian', 'Mongolian', 'Russian', 'Serbian', 'Tajik', 'Ukrainian', '---']
         self.source = getExtensionDefault("com.ninastoessinger.word-o-mat.source", 4)
 
         bundle = ExtensionBundle("word-o-mat")
@@ -306,6 +306,8 @@ class WordomatWindow:
 
         # read included textfiles
         for textfile in self.textfiles:
+            if not textfile:
+                continue
             path = bundle.getResourceFilePath(textfile)
             with codecs.open(path, mode="r", encoding="utf-8") as fo:
                 lines = fo.read()
